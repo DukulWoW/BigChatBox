@@ -1,0 +1,8 @@
+<Bindings>
+    <Binding name="BIGCHATBOX_USE_BLIZZARD_CHAT" category="BigChatBox" default="CTRL-ENTER" runOnUp="false">
+        BCB_UseBlizzardChat()
+    </Binding>
+    <Binding name="BIGCHATBOX_OPEN_MULTILINE" category="BigChatBox" default="SHIFT-ENTER" runOnUp="false">
+        BCB_OpenMultiline()
+    </Binding>
+</Bindings>
