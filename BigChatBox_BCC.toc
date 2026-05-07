@@ -1,0 +1,75 @@
+## Interface: 20505
+## Title: |cff5599ffB|cff5fa0ffi|cff69a7ffg|cff73aeffC|cff7db5ffh|cff87bcffa|cff91c3fft|cff9bcaffB|cffa5d1ffo|cffafd8ffx|r
+## IconTexture: Interface/Addons/BigChatBox/assets/icon
+## Notes: A large, customizable chat input box — TBC Anniversary Classic
+## Author: Dukul
+## Version: 6.0.5
+## SavedVariables: BigChatBoxDB BigChatBoxLocale
+## OptionalDeps: LibSharedMedia-3.0, LibDBIcon-1.0
+
+# Bootstrap
+Init.lua
+
+# Classic compatibility shim (must load before everything else)
+Compat\ClassicCompat.lua
+
+# Libraries
+libs\libs.xml
+
+# Utilities
+Utils\Utils.lua
+Utils\Encoding.lua
+
+# Locales
+Locales\enUS.lua
+Locales\deDE.lua
+Locales\frFR.lua
+Locales\esES.lua
+Locales\ptBR.lua
+Locales\itIT.lua
+Locales\jaJP.lua
+Locales\koKR.lua
+Locales\zhCN.lua
+Locales\zhTW.lua
+
+# Core systems (order matters!)
+Core\Constants.lua
+Core\Database.lua
+Core\Security.lua
+Core\Events.lua
+Core\SlashCommands.lua
+Core\Initialize.lua
+
+# Editbox
+Editbox\Editbox.lua
+Editbox\ChannelDisplay.lua
+Editbox\LinkInsertion.lua
+Editbox\ChatIntercept.lua
+Editbox\SendMessage.lua
+Editbox\History.lua
+Editbox\Handlers.lua
+
+# Features
+Features\RandomText.lua
+Features\Autocomplete.lua
+Features\Snippets.lua
+Features\LinkHover.lua
+Features\AnchorEditor.lua
+Features\EmojiPicker.lua
+
+# Minimap
+Minimap\Minimap.lua
+
+# Config
+Config\ConfigWidgets.lua
+Config\GeneralTab.lua
+Config\DesignerTab.lua
+Config\PlacementTab.lua
+Config\FeaturesTab.lua
+Config\SnippetsTab.lua
+Config\HistoryTab.lua
+Config\AdvancedTab.lua
+Config\ResetTab.lua
+Config\ConfigMain.lua
+Config\ConfigMinimal.lua
+Config\PatchNotes.lua
