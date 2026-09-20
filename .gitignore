@@ -1,3 +1,14 @@
+# Claude Code project context (local only)
+CLAUDE.md
+FILEMAP.md
+.claude/
+
+# Local working files
+_work/
+_docs/
+_filearchive/
+_reference/
+
 # Compiled Lua sources
 luac.out
 
