@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://media.forgecdn.net/attachments/description/1462648/description_21471a9a-0b37-4165-a8ac-e2ec08454d77.png" />
+  <img src=".github/logo.png" width="256" alt="BigChatBox logo" />
   <br><br>
   <h1>BigChatBox</h1>
   <b>By Dukul</b>

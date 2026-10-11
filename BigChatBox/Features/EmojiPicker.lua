@@ -226,7 +226,7 @@ local function BuildPickerPanel()
     -- ── EMOTICONS TAB ────────────────────────────────────────────────────────
     -- Uses ScrollFrameTemplate (same as Config) -- always has scrollbar visible.
     -- ScrollFrame pulls in by SB_INSET on the right; scrollbar sits in that space.
-    local asciiScroll = CreateFrame("ScrollFrame", nil, f, "ScrollFrameTemplate")
+    local asciiScroll = BCB.CreateScrollFrame(nil, f)
     asciiScroll:SetPoint("TOPLEFT",     f, "TOPLEFT",     PAD,              CONTENT_Y)
     asciiScroll:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", -(PAD + SB_INSET), BORDER)
     asciiScroll:Hide()

@@ -98,7 +98,7 @@ function Config.BuildAdvancedTab(container)
         local lgPp = CreateFrame("Frame", nil, lgBtn, "BackdropTemplate"); lgPp:SetFrameStrata("FULLSCREEN_DIALOG"); lgPp:SetFrameLevel(500); lgPp:SetClampedToScreen(true)
         lgPp:SetBackdrop({bgFile="Interface\\Buttons\\White8x8", edgeFile="Interface\\Tooltips\\UI-Tooltip-Border", edgeSize=12, insets={left=2,right=2,top=2,bottom=2}})
         lgPp:SetBackdropColor(0.06,0.06,0.06,0.97); lgPp:SetBackdropBorderColor(0.5,0.5,0.5,1); lgPp:Hide(); lgPp:EnableMouse(true)
-        local lgSf = CreateFrame("ScrollFrame", nil, lgPp, "ScrollFrameTemplate"); lgSf:SetPoint("TOPLEFT", 4, -4); lgSf:SetPoint("BOTTOMRIGHT", -4, 4)
+        local lgSf = BCB.CreateScrollFrame(nil, lgPp); lgSf:SetPoint("TOPLEFT", 4, -4); lgSf:SetPoint("BOTTOMRIGHT", -4, 4)
         local lgSc = CreateFrame("Frame", nil, lgSf); lgSf:SetScrollChild(lgSc)
         lgBtn:SetScript("OnClick", function()
             if lgPp:IsShown() then lgPp:Hide(); return end

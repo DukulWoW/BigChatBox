@@ -122,9 +122,9 @@ local function BuildWindow(name, title, withCheckbox)
     nameFS:SetTextColor(0.85, 0.85, 0.85)
 
     -- Scrollable notes list
-    local sf = CreateFrame("ScrollFrame", nil, f, "ScrollFrameTemplate")
+    local sf = BCB.CreateScrollFrame(nil, f)
     sf:SetPoint("TOPLEFT",    20, -68)
-    sf:SetPoint("BOTTOMRIGHT", BCB.IsClassic and -28 or -24, withCheckbox and 56 or 16)
+    sf:SetPoint("BOTTOMRIGHT", -24, withCheckbox and 56 or 16)
     local ct = CreateFrame("Frame", nil, sf)
     ct:SetWidth(sf:GetWidth() - 10)
     sf:SetScrollChild(ct)

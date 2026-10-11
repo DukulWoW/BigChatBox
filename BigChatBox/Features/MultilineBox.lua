@@ -611,7 +611,7 @@ local function BuildMultilineFrame()
     mlCounter = counter
 
     -- ── ScrollFrame ───────────────────────────────────────────────────────────
-    local scroll = CreateFrame("ScrollFrame", nil, f, "ScrollFrameTemplate")
+    local scroll = BCB.CreateScrollFrame(nil, f)
     scroll:SetPoint("TOPLEFT",     f, "TOPLEFT",     INNER,           -INNER)
     scroll:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", -(INNER + SB_W),  BOTTOM_BAR)
     mlScroll = scroll

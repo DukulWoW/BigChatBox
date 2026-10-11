@@ -23,7 +23,7 @@ function Config.BuildSnippetsTab(container)
     local listBox = CreateFrame("Frame", nil, ct, "InsetFrameTemplate")
     listBox:SetPoint("TOPLEFT", 4, y); listBox:SetWidth(listW); listBox:SetPoint("BOTTOM", ct, "BOTTOM", 0, 36)
     local listBg = listBox:CreateTexture(nil, "BACKGROUND", nil, -1); listBg:SetPoint("TOPLEFT",3,-3); listBg:SetPoint("BOTTOMRIGHT",-3,3); listBg:SetColorTexture(0.03,0.03,0.03,0.9)
-    local listSF = CreateFrame("ScrollFrame", nil, listBox, "ScrollFrameTemplate")
+    local listSF = BCB.CreateScrollFrame(nil, listBox)
     listSF:SetPoint("TOPLEFT", 6, -4); listSF:SetPoint("BOTTOMRIGHT", -22, 4)
     local listSC = CreateFrame("Frame", nil, listSF); listSC:SetWidth(listW - 30); listSF:SetScrollChild(listSC)
     local scrollBar = listSF.ScrollBar

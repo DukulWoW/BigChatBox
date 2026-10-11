@@ -71,7 +71,7 @@ function Config.BuildHistoryTab(container)
     hBox:SetPoint("TOPLEFT", 4, y)
     hBox:SetPoint("BOTTOMRIGHT", ct, "BOTTOMRIGHT", -4, whisperBlockH + 36)
     local hBg = hBox:CreateTexture(nil, "BACKGROUND", nil, -1); hBg:SetPoint("TOPLEFT", 3, -3); hBg:SetPoint("BOTTOMRIGHT", -3, 3); hBg:SetColorTexture(0.03, 0.03, 0.03, 0.9)
-    local hSF = CreateFrame("ScrollFrame", nil, hBox, "ScrollFrameTemplate"); hSF:SetPoint("TOPLEFT", 6, -4); hSF:SetPoint("BOTTOMRIGHT", -22, 4)
+    local hSF = BCB.CreateScrollFrame(nil, hBox); hSF:SetPoint("TOPLEFT", 6, -4); hSF:SetPoint("BOTTOMRIGHT", -22, 4)
     local hSC = CreateFrame("Frame", nil, hSF); hSC:SetWidth(Config.WINDOW_WIDTH - 60); hSF:SetScrollChild(hSC)
 
     -- Build (or rebuild) history rows, filtered by query string

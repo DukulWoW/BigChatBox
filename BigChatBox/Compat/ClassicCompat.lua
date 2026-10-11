@@ -11,7 +11,7 @@
 --   3. BNet whisper APIs      — absent; SendDirect falls through gracefully already
 --   4. CHALLENGE_MODE events  — not registered on Classic (handled by flag check)
 --   5. Locale                 — LoadSavedVariablesFirst:1 ignored; use GetLocale()
---   6. Config slider widget   — MinimalSliderWithSteppersTemplate absent; custom build
+--   6. Config slider widget   — no patch: the modern template exists on Classic too
 --   7. Config dropdown widget — WowStyle1DropdownTemplate absent; custom build
 --   8. AddonCompartment       — not registered (omitted from Classic TOC)
 
@@ -76,14 +76,11 @@ BCB._classicNoBNet = true  -- checked by Events.lua
 BCB.IsClassicLocale = true  -- AdvancedTab checks this to hide language selector
 
 -- ─── 6. Classic slider widget ────────────────────────────────────────────────
--- MinimalSliderWithSteppersTemplate does not exist in Classic.
--- We replace Config.CreateSlider after Config is set up, using a custom
--- implementation that looks visually identical:
---   [Label ............... ] [−] [====•====] [+] [value]
---
--- Textures used are from Interface/Buttons/ which exist in all WoW versions.
---
--- This runs as a late hook after ConfigWidgets.lua has defined Config.CreateSlider.
+-- No longer needed: the Classic clients ship MinimalSliderWithSteppersTemplate,
+-- so Config.CreateSlider uses it everywhere (as BNB does). The hand-built Classic
+-- slider was removed 2026-10-11 (ALL-07).
+-- Scroll bars likewise: BCB.CreateScrollFrame (Utils.lua) swaps Classic's wide
+-- WoWClassicScrollBar for MinimalScrollBar.
 
 -- ─── 7. Classic dropdown widget ──────────────────────────────────────────────
 -- WowStyle1DropdownTemplate does not exist in Classic.

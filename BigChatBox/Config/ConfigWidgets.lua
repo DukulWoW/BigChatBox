@@ -39,14 +39,11 @@ function Config.GetML(mt) local l=Config.GetLSM(); if not l then return {"Defaul
 -- Smart ScrollFrame: hides scrollbar when not needed
 --------------------------------------------------------------------------------
 function Config.CreateSmartScrollFrame(parent, topOffset)
-    local sf = CreateFrame("ScrollFrame", nil, parent, "ScrollFrameTemplate")
+    local sf = BCB.CreateScrollFrame(nil, parent)
 
-    -- In Classic, ScrollFrameTemplate's scrollbar is anchored to the RIGHT of the
-    -- scrollframe (not inside it), so we need to leave room for it.
-    -- Classic scrollbar = ~25px wide. Container is -4 from window. So scrollframe
-    -- must end at -28 from container right to keep the bar inside the window.
-    -- In retail the scrollbar IS inside the scrollframe chrome, so -24 suffices.
-    local sbOffset = BCB.IsClassic and -28 or -24
+    -- -24 leaves room for the MinimalScrollBar, which every client now gets
+    -- (BCB.CreateScrollFrame swaps it in on Classic; Classic needed -28 before).
+    local sbOffset = -24
 
     sf:SetPoint("TOPLEFT", 0, topOffset or -172)
     sf:SetPoint("BOTTOMRIGHT", sbOffset, 0)
@@ -79,7 +76,7 @@ function Config.CreateSmartScrollFrame(parent, topOffset)
     function sf:UpdateScrollbar()
         C_Timer.After(0.1, function()
             local contentH = ct:GetHeight(); local visibleH = sf:GetHeight()
-            local offset = BCB.IsClassic and -28 or -24
+            local offset = sbOffset
             if contentH <= visibleH then
                 if scrollBar then scrollBar:Hide() end
                 sf:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", -4, 0)
@@ -95,207 +92,26 @@ function Config.CreateSmartScrollFrame(parent, topOffset)
 end
 
 --------------------------------------------------------------------------------
--- Classic slider helper — builds a MinimalSlider look-alike using universally
--- available primitives. Called only when BCB.IsClassic = true.
--- Layout: [Label ............] [−] [track•thumb] [+] [value]
+-- No mouse wheel on a slider: the wheel scrolls the page (as BNB, Dukul 2026-09-28;
+-- BCB 2026-10-11). MinimalSliderWithSteppersTemplate takes the wheel itself (inner
+-- Slider and the stepper arrows), so leaving out our own OnMouseWheel is not enough.
+-- With the wheel off, the event falls through to the scroll frame below.
 --------------------------------------------------------------------------------
---------------------------------------------------------------------------------
--- Classic slider — pure drag/click implementation, no Slider widget.
--- The Slider widget in TBC fires OnValueChanged continuously during drag
--- with raw float values and no SetObeyStepOnDrag, causing wild jumping.
--- Instead we use a transparent drag zone that tracks cursor delta via OnUpdate.
--- Layout (all pixel-based, no relative anchors between siblings):
---   [Label .........] [-] [====track====] [+] [value]
---   Label: LEFT PAD to 45% of row width
---   [-]: 18px button
---   Track: fills middle
---   [+]: 18px button
---   Value: 38px label at RIGHT-PAD
---------------------------------------------------------------------------------
-local CL_BTN = 18    -- width and height of − / + buttons
-local CL_VAL = 38    -- width of value display
-local CL_GAP = 3     -- gap between elements
-
-local function CreateClassicSlider(parent, label, mn, mx, cur, def, onChange, fmt)
-    local h = CreateFrame("Frame", nil, parent)
-    h:SetHeight(36)
-
-    local fF = fmt or function(v) return tostring(math.floor(v)) end
-    local trackedVal = math.max(mn, math.min(mx, math.floor(cur + 0.5)))
-
-    -- Label
-    local lbl = label
-    if def ~= nil then lbl = label .. "  |cff666666(Default: " .. tostring(def) .. ")|r" end
-    h.Label = h:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-    h.Label:SetJustifyH("RIGHT")
-    h.Label:SetPoint("LEFT", PAD, 0)
-    -- Label occupies left 45% of the row; right side has controls
-    h.Label:SetPoint("RIGHT", h, "LEFT", math.floor(Config.WINDOW_WIDTH * 0.45), 0)
-    h.Label:SetText(lbl)
-
-    -- Value display — anchored RIGHT-PAD, fixed width
-    local valStr = h:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    valStr:SetWidth(CL_VAL); valStr:SetJustifyH("CENTER")
-    valStr:SetPoint("RIGHT", h, "RIGHT", -PAD, 0)
-    valStr:SetText(fF(trackedVal))
-
-    -- + button — right of track, left of value
-    local plusBtn = CreateFrame("Button", nil, h, "BackdropTemplate")
-    plusBtn:SetSize(CL_BTN, CL_BTN)
-    plusBtn:SetPoint("RIGHT", valStr, "LEFT", -CL_GAP, 0)
-    plusBtn:SetBackdrop({bgFile="Interface\\Buttons\\White8x8",
-        edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",
-        edgeSize=8, insets={left=1,right=1,top=1,bottom=1}})
-    plusBtn:SetBackdropColor(0.12, 0.12, 0.12, 1)
-    plusBtn:SetBackdropBorderColor(0.45, 0.45, 0.45, 1)
-    local plusTxt = plusBtn:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    plusTxt:SetAllPoints(); plusTxt:SetText("+")
-
-    -- − button — left of track
-    local minusBtn = CreateFrame("Button", nil, h, "BackdropTemplate")
-    minusBtn:SetSize(CL_BTN, CL_BTN)
-    -- Will be anchored after track is created; placeholder first
-    minusBtn:SetBackdrop({bgFile="Interface\\Buttons\\White8x8",
-        edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",
-        edgeSize=8, insets={left=1,right=1,top=1,bottom=1}})
-    minusBtn:SetBackdropColor(0.12, 0.12, 0.12, 1)
-    minusBtn:SetBackdropBorderColor(0.45, 0.45, 0.45, 1)
-    local minusTxt = minusBtn:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    minusTxt:SetAllPoints(); minusTxt:SetText("-")
-
-    -- Track container — between label and +button
-    local track = CreateFrame("Frame", nil, h, "BackdropTemplate")
-    track:SetHeight(14)
-    -- Left anchor: 45% + gap + CL_BTN + gap from left
-    local trackLeft = math.floor(Config.WINDOW_WIDTH * 0.45) + CL_GAP + CL_BTN + CL_GAP
-    track:SetPoint("LEFT", h, "LEFT", trackLeft, 0)
-    track:SetPoint("RIGHT", plusBtn, "LEFT", -CL_GAP, 0)
-    track:SetBackdrop({bgFile="Interface\\Buttons\\White8x8",
-        edgeSize=0, insets={left=0,right=0,top=0,bottom=0}})
-    track:SetBackdropColor(0.18, 0.18, 0.18, 1)
-
-    -- Anchor − button left of track
-    minusBtn:SetPoint("RIGHT", track, "LEFT", -CL_GAP, 0)
-
-    -- Fill bar (blue, proportional to value)
-    local fill = track:CreateTexture(nil, "ARTWORK")
-    fill:SetPoint("LEFT", track, "LEFT", 1, 0)
-    fill:SetHeight(12)
-    fill:SetColorTexture(0.3, 0.5, 1.0, 1)
-
-    -- Thumb indicator (bright dot on the fill)
-    local thumb = track:CreateTexture(nil, "OVERLAY")
-    thumb:SetSize(8, 12)
-    thumb:SetColorTexture(0.7, 0.85, 1.0, 1)
-
-    local function UpdateTrack(v)
-        local ratio = (v - mn) / math.max(mx - mn, 1)
-        local w = track:GetWidth() - 2
-        if not w or w <= 0 then return end
-        local fillW = math.max(ratio * w, 1)
-        fill:SetWidth(fillW)
-        thumb:ClearAllPoints()
-        thumb:SetPoint("LEFT", track, "LEFT", math.max(fillW - 4, 0), 0)
+local function NoSliderWheel(frame)
+    pcall(frame.EnableMouseWheel, frame, false)
+    if frame.HasScript and frame:HasScript("OnMouseWheel") then
+        pcall(frame.SetScript, frame, "OnMouseWheel", nil)
     end
-
-    -- Drag zone — transparent button over the whole track
-    local dragZone = CreateFrame("Button", nil, track)
-    dragZone:SetAllPoints(track)
-    dragZone:RegisterForClicks("LeftButtonUp")
-    dragZone:EnableMouse(true)
-
-    -- OnMouseDown: start drag, tracking cursor X position
-    local dragStartX, dragStartVal
-    dragZone:SetScript("OnMouseDown", function(self, button)
-        if button ~= "LeftButton" then return end
-        dragStartX = select(1, GetCursorPosition())
-        dragStartVal = trackedVal
-        self:SetScript("OnUpdate", function()
-            local cx = select(1, GetCursorPosition())
-            local trackW = track:GetWidth() - 2
-            local scale = UIParent:GetEffectiveScale()
-            local pixelDelta = (cx - dragStartX) / scale
-            local range = mx - mn
-            local valueDelta = math.floor(pixelDelta / trackW * range + 0.5)
-            local newV = math.max(mn, math.min(mx, dragStartVal + valueDelta))
-            if newV ~= trackedVal then
-                trackedVal = newV
-                valStr:SetText(fF(trackedVal))
-                UpdateTrack(trackedVal)
-                if onChange then onChange(trackedVal) end
-            end
-        end)
-    end)
-
-    -- Also allow clicking anywhere on the track to jump to that position
-    dragZone:SetScript("OnClick", function(self)
-        local cx = select(1, GetCursorPosition())
-        local tx = track:GetLeft()
-        local tw = track:GetWidth()
-        if not tx or tw <= 0 then return end
-        local scale = UIParent:GetEffectiveScale()
-        local ratio = math.max(0, math.min(1, (cx / scale - tx) / tw))
-        local newV = math.max(mn, math.min(mx, mn + math.floor(ratio * (mx - mn) + 0.5)))
-        if newV ~= trackedVal then
-            trackedVal = newV
-            valStr:SetText(fF(trackedVal))
-            UpdateTrack(trackedVal)
-            if onChange then onChange(trackedVal) end
-        end
-    end)
-
-    dragZone:SetScript("OnMouseUp", function(self)
-        self:SetScript("OnUpdate", nil)
-    end)
-
-    -- − / + click handlers
-    minusBtn:SetScript("OnClick", function()
-        local newV = math.max(mn, trackedVal - 1)
-        if newV ~= trackedVal then
-            trackedVal = newV
-            valStr:SetText(fF(trackedVal))
-            UpdateTrack(trackedVal)
-            if onChange then onChange(trackedVal) end
-        end
-    end)
-    plusBtn:SetScript("OnClick", function()
-        local newV = math.min(mx, trackedVal + 1)
-        if newV ~= trackedVal then
-            trackedVal = newV
-            valStr:SetText(fF(trackedVal))
-            UpdateTrack(trackedVal)
-            if onChange then onChange(trackedVal) end
-        end
-    end)
-
-    -- Mouse wheel: pass directly to scrollframe (don't consume for slider value)
-    -- Use h:EnableMouseWheel(false) so events bubble naturally.
-    h:EnableMouseWheel(false)
-    track:EnableMouseWheel(false)
-
-    -- Deferred initial render
-    C_Timer.After(0.05, function() UpdateTrack(trackedVal) end)
-
-    h.Slider = dragZone  -- expose for external SetValue calls
-    function h:SetValue(v)
-        trackedVal = math.max(mn, math.min(mx, math.floor(v + 0.5)))
-        valStr:SetText(fF(trackedVal))
-        C_Timer.After(0.05, function() UpdateTrack(trackedVal) end)
-    end
-    return h
+    for _, child in ipairs({ frame:GetChildren() }) do NoSliderWheel(child) end
 end
 
 --------------------------------------------------------------------------------
 -- Slider with label and value display
--- Routes to Classic build when MinimalSliderWithSteppersTemplate is absent.
+-- MinimalSliderWithSteppersTemplate on every client: the Classic clients ship it
+-- too (BNB uses it everywhere, its DEP-05). The hand-built Classic slider went on
+-- 2026-10-11 once the template was tested on all three Classic clients (ALL-07).
 --------------------------------------------------------------------------------
 function Config.CreateSlider(parent, label, mn, mx, cur, def, onChange, fmt)
-    -- Classic path: no MinimalSliderWithSteppersTemplate
-    if BCB.IsClassic or not MinimalSliderWithSteppersMixin then
-        return CreateClassicSlider(parent, label, mn, mx, cur, def, onChange, fmt)
-    end
-
-    -- Retail path (unchanged)
     local h = CreateFrame("Frame", nil, parent); h:SetHeight(36)
     local lbl = label
     if def ~= nil then lbl = label .. "  |cff666666(Default: " .. tostring(def) .. ")|r" end
@@ -316,12 +132,7 @@ function Config.CreateSlider(parent, label, mn, mx, cur, def, onChange, fmt)
         if onChange then onChange(trackedVal) end
     end)
     function h:SetValue(v) trackedVal = math.floor(v); h.Slider:SetValue(trackedVal) end
-    -- Mouse wheel: scroll up = +1, scroll down = -1
-    h:EnableMouseWheel(true)
-    h:SetScript("OnMouseWheel", function(_, delta)
-        local newVal = math.max(mn, math.min(mx, trackedVal + delta))
-        if newVal ~= trackedVal then h.Slider:SetValue(newVal) end
-    end)
+    NoSliderWheel(h)
     return h
 end
 
@@ -410,7 +221,7 @@ function Config.CreateWowDropdown(parent, label, getEntries, selected, onChange,
         local pp = CreateFrame("Frame", nil, btn, "BackdropTemplate"); pp:SetFrameStrata("FULLSCREEN_DIALOG"); pp:SetFrameLevel(500); pp:SetClampedToScreen(true)
         pp:SetBackdrop({bgFile="Interface\\Buttons\\White8x8", edgeFile="Interface\\Tooltips\\UI-Tooltip-Border", edgeSize=12, insets={left=2,right=2,top=2,bottom=2}})
         pp:SetBackdropColor(0.06,0.06,0.06,0.97); pp:SetBackdropBorderColor(0.5,0.5,0.5,1); pp:Hide(); pp:EnableMouse(true)
-        local sf = CreateFrame("ScrollFrame", nil, pp, "ScrollFrameTemplate"); sf:SetPoint("TOPLEFT", 4, -4); sf:SetPoint("BOTTOMRIGHT", -4, 4)
+        local sf = BCB.CreateScrollFrame(nil, pp); sf:SetPoint("TOPLEFT", 4, -4); sf:SetPoint("BOTTOMRIGHT", -4, 4)
         local sc = CreateFrame("Frame", nil, sf); sf:SetScrollChild(sc)
         local function Pop()
             for _,ch in ipairs({sc:GetChildren()}) do ch:Hide(); ch:SetParent(nil) end

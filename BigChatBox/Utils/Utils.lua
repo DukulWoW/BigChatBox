@@ -92,3 +92,33 @@ function BCB.SeatChrome(f)
     f._bcbSeated = true
     pcall(SeatPieces, f, FOREVER_CHROME_DELTA)
 end
+
+--------------------------------------------------------------------------------
+-- SCROLL FRAME  (same as BNB.CreateScrollFrame, BNB's ALL-171 / ALL-172)
+-- Every ScrollFrameTemplate frame is made here. Retail and Forever get the
+-- template's MinimalScrollBar. Classic's template builds the wide
+-- WoWClassicScrollBar, which stuck out of our windows; the Classic clients ship
+-- MinimalScrollBar too, so it is swapped in with Retail's offsets and bound the
+-- way the template's ScrollFrame_OnLoad binds its own bar. Done before the caller
+-- sets any script: the bind SetScripts OnVerticalScroll, OnScrollRangeChanged and
+-- OnMouseWheel.
+--------------------------------------------------------------------------------
+function BCB.CreateScrollFrame(name, parent)
+    local sf = CreateFrame("ScrollFrame", name, parent, "ScrollFrameTemplate")
+    local old = sf.ScrollBar
+    if BCB.IsClassic and old and ScrollUtil and ScrollUtil.InitScrollFrameWithScrollBar then
+        local ok, bar = pcall(CreateFrame, "EventFrame", nil, sf, "MinimalScrollBar")
+        if ok and bar then
+            old:Hide()
+            old:ClearAllPoints()
+            bar:SetPoint("TOPLEFT", sf, "TOPRIGHT", 6, 2)
+            bar:SetPoint("BOTTOMLEFT", sf, "BOTTOMRIGHT", 6, 5)
+            if bar.SetHideIfUnscrollable then bar:SetHideIfUnscrollable(sf.scrollBarHideIfUnscrollable) end
+            sf.ScrollBar = bar
+            bar:Show()
+            ScrollUtil.InitScrollFrameWithScrollBar(sf, bar)
+            if bar.Update then bar:Update() end
+        end
+    end
+    return sf
+end
