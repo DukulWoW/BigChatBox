@@ -40,6 +40,7 @@ BCB.PATCH_NOTES = {
         CHANGE .. "A message with several lines (multiline box or a multi-line snippet): a line starting with / stops the send, so commands are never posted as text. Lines over 255 characters are split instead of cut off, and more than 10 messages asks first",
         CHANGE .. "The whisper name suggestions keep the realm for players on other realms, so the whisper reaches the right person",
         CHANGE .. "History tab: Wipe Entire History now says it also clears Recent Whispers, and no longer reloads the UI",
+        CHANGE .. "Scroll bars and sliders use the modern style on every client. The mouse wheel over a slider scrolls the page instead of changing the value",
         CHANGE .. "BigChatBox is now licensed under the GPLv3; the logo and icon are All Rights Reserved",
         FIXED .. "Picking a key that is already in use now binds the action you were setting, not always the multiline box. The setup wizard asks first too",
         FIXED .. "/bcb reset and Shift+Alt+click now keep the box at the default position after a reload",
