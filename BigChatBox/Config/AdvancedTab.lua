@@ -44,8 +44,8 @@ function Config.BuildAdvancedTab(container)
         if e.code == curLangCode then curLangLabel = MakeLabel(e); break end
     end
 
-    -- Language override (retail only — LoadSavedVariablesFirst:1 not available in Classic)
-    if not BCB.IsClassicLocale then
+    -- Language override. Every TOC has LoadSavedVariablesFirst: 1, so BigChatBoxLocale
+    -- is loaded before Locales/ runs on every client (Classic too since ALL-04).
     local lgH = ct:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge"); lgH:SetPoint("TOPLEFT", PAD, y); lgH:SetText(L["SECTION_LANGUAGE"]); lgH:SetTextColor(1,0.82,0); y = y - 20
     local lgD = ct:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall"); lgD:SetPoint("TOPLEFT", PAD, y); lgD:SetWidth(Config.WINDOW_WIDTH - 80); lgD:SetJustifyH("LEFT")
     lgD:SetText(L["LANGUAGE_DESC"]); lgD:SetTextColor(0.7,0.7,0.7); y = y - 18
@@ -126,8 +126,6 @@ function Config.BuildAdvancedTab(container)
         end)
     end
     y = y - 52
-
-    end -- not BCB.IsClassicLocale
 
     -- Behavior
     local bhH = ct:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge"); bhH:SetPoint("TOPLEFT", PAD, y); bhH:SetText(L["BEHAVIOR"]); bhH:SetTextColor(1,0.82,0); y = y - 22

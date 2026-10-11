@@ -68,12 +68,11 @@ BCB._classicNoBNet = true  -- checked by Events.lua
 -- Classic clients will silently never fire these events, which is fine.
 -- No action needed.
 
--- ─── 5. Locale — use client locale directly ─────────────────────────────────
--- LoadSavedVariablesFirst:1 is a Midnight-only TOC directive.
--- On Classic, BigChatBoxLocale SavedVariable loads AFTER Lua files, so it's
--- nil when locale files run. We set a flag so AdvancedTab doesn't offer the
--- language override option (since it can't work reliably).
-BCB.IsClassicLocale = true  -- AdvancedTab checks this to hide language selector
+-- ─── 5. Locale — no longer needed ───────────────────────────────────────────
+-- The Classic TOCs carry LoadSavedVariablesFirst: 1 like retail and Forever
+-- (ALL-04, 2026-10-11; Era-only addons such as Leatrix Maps use it), so the
+-- BigChatBoxLocale override works on Classic and the language selector shows
+-- there too. The old BCB.IsClassicLocale flag that hid it is gone.
 
 -- ─── 6. Classic slider widget ────────────────────────────────────────────────
 -- No longer needed: the Classic clients ship MinimalSliderWithSteppersTemplate,

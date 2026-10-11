@@ -107,8 +107,7 @@ local function BuildPage1(parent)
     txt:SetTextColor(0.9, 0.9, 0.9); y = y - (txt:GetStringHeight() + 22)
 
     -- Language selector (selecting a new language immediately confirms + reloads).
-    -- Not on Classic: the client ignores LoadSavedVariablesFirst there (IsClassicLocale).
-    if not BCB.IsClassicLocale then
+    -- On every client: all five TOCs have LoadSavedVariablesFirst: 1 (Classic since ALL-04).
     local lgLbl = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight"); lgLbl:SetPoint("TOP", 0, y)
     lgLbl:SetText(L["WELCOME_LANG_LBL"] or "Display language:"); y = y - 22
 
@@ -177,7 +176,6 @@ local function BuildPage1(parent)
         end
         y = y - 6
     end
-    end -- not BCB.IsClassicLocale
 
     local btn = CreateFrame("Button", nil, f, "UIPanelButtonTemplate"); btn:SetSize(200, 30)
     btn:SetPoint("BOTTOM", 0, 20); btn:SetText(L["WELCOME_SETUP_BTN"] or "Setup BigChatBox")

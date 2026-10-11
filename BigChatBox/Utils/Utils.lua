@@ -20,7 +20,7 @@ end
 -- Falls back to FRIZQT__ (western) for Latin locales.
 -- Used to override GameFontNormal on buttons/labels when a CJK locale is forced.
 function BCB.GetUIFont()
-    local locale = BigChatBoxLocale or GetLocale()
+    local locale = BCB._forcedLocale or GetLocale()  -- the language Locales/ actually loaded
     if locale == "zhCN" or locale == "zhTW" or locale == "jaJP" then
         return "Fonts\\ARKai_T.ttf", 13  -- CJK Unified Ideographs (kanji, zh chars)
     elseif locale == "koKR" then
