@@ -1,0 +1,55 @@
+name: Bug report
+description: Something in BigChatBox is broken, or shows a Lua error.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please check the [open issues](https://github.com/DukulWoW/BigChatBox/issues) first, in case someone already reported it.
+  - type: input
+    id: version
+    attributes:
+      label: BigChatBox version
+      description: Shown in the addon list, or in the BigChatBox settings (/bcb).
+      placeholder: "7.0.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: client
+    attributes:
+      label: WoW client
+      options:
+        - Retail
+        - WoW Forever
+        - TBC Anniversary
+        - Mists of Pandaria Classic
+        - Classic Era
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can we make it happen again?
+      placeholder: |
+        1. Press Enter to open the chat box
+        2. Type ...
+        3. See the error
+  - type: textarea
+    id: error
+    attributes:
+      label: Lua error
+      description: If you got an error, paste the full text here. The BugSack and BugGrabber addons make errors easy to copy.
+      render: text
+  - type: textarea
+    id: addons
+    attributes:
+      label: Other addons
+      description: Optional. If the bug looks like a clash with another addon (chat addons especially), which ones do you use?
