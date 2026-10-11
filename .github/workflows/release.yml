@@ -1,0 +1,74 @@
+name: Release
+
+# A v* tag push is the whole release: the packager builds the zip, uploads it to
+# CurseForge and Wago, and cuts the GitHub release. WoWInterface is not set up
+# (no X-WoWI-ID in the TOCs), so the packager skips it.
+#
+# Manual runs pick a mode:
+#   dry          - build only, upload nowhere. The safe way to check the zip.
+#   github-only  - cut the GitHub release for an existing tag WITHOUT touching the
+#                  addon sites. Run it with --ref <tag>. This exists because
+#                  a failed release step must not mean re-uploading a version that
+#                  already went out.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'What to do'
+        type: choice
+        options:
+          - dry
+          - github-only
+        default: dry
+
+# Creating a release is a write to repository contents; without this the built-in
+# GITHUB_TOKEN is read-only and the packager fails with 403 "Resource not
+# accessible by integration" after every upload has already succeeded.
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+        with:
+          # The packager reads tags and history to work out the version and
+          # the commit range; a shallow clone gives it neither.
+          fetch-depth: 0
+
+      - name: Package
+        uses: BigWigsMods/packager@v2
+        env:
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          # The packager skips any site whose token is empty, which is what makes
+          # github-only mode safe. It expects CF_API_KEY; the secret is CF_API_TOKEN.
+          CF_API_KEY: ${{ github.event_name == 'push' && secrets.CF_API_TOKEN || '' }}
+          WAGO_API_TOKEN: ${{ github.event_name == 'push' && secrets.WAGO_API_TOKEN || '' }}
+        with:
+          # -n "<file name>:<upload label>". The label is what CurseForge and Wago
+          # display as the release name. A space is not possible: release.sh runs
+          # the label through filename_filter, which turns anything outside
+          # [A-Za-z0-9._!-] into "_". A hyphen is the closest it allows.
+          args: >-
+            -n "{package-name}-{project-version}:{package-name}-{project-version}"
+            ${{ inputs.mode == 'dry' && '-d' || '' }}
+
+      - name: Keep the build for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: |
+            .release/*.zip
+            .release/*.md
+            .release/*.txt
+          # .release is a dotted directory, and upload-artifact v4 skips hidden
+          # paths unless told otherwise - without this the step finds nothing.
+          include-hidden-files: true
+          if-no-files-found: warn

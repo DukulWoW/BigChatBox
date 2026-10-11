@@ -1,0 +1,28 @@
+# BigWigs packager layout contract for BigChatBox.
+# The addon lives in BigChatBox/ inside the repo (same layout as BigNoteBox):
+# move-folders lifts it to the top level of the zip. The result must list
+# exactly one folder, BigChatBox\, and nothing else. Repo-root files
+# (CHANGELOG.md, README.md, LICENSE, ...) are not in the zip; the addon
+# folder carries its own LICENSE and LICENSE-ASSETS copies.
+
+package-as: BigChatBox
+
+enable-nolib-creation: no
+
+move-folders:
+  BigChatBox/BigChatBox: BigChatBox
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+ignore:
+  - .github
+  - .pkgmeta
+  - _work
+  - _docs
+  - _filearchive
+  - _reference
+  - CLAUDE.md
+  - FILEMAP.md
+  - README.md
