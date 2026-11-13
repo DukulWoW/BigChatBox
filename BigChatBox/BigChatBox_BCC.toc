@@ -10,6 +10,18 @@
 ## X-Curse-Project-ID: 1462648
 ## X-Wago-ID: YK9bg3GL
 
+## Category-enUS: Chat
+## Category-deDE: Chat
+## Category-esES: Chat
+## Category-esMX: Chat
+## Category-frFR: Discussion
+## Category-itIT: Chat
+## Category-koKR: 대화
+## Category-ptBR: Bate-papo
+## Category-ruRU: Чат
+## Category-zhCN: 聊天
+## Category-zhTW: 對話
+
 # Bootstrap
 Init.lua
 
