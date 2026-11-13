@@ -7,7 +7,7 @@ BigChatBox = BigChatBox or {}
 local BCB = BigChatBox
 
 BCB.ADDON_NAME = ADDON_NAME
-BCB.ADDON_VERSION = "7.0.0"
+BCB.ADDON_VERSION = "7.0.1"
 BCB.NS = BCB_NS  -- private namespace for internal module communication
 
 -- Version shorthand (legacy compat — some files reference BCB.version)
