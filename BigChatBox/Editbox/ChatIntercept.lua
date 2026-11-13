@@ -94,6 +94,13 @@ function BCB.HookDefaultEditBox()
                         BCB._lockdownNotified = true
                         -- BUG-18: text from the locale table (string reads only)
                         local reason = L["LOCKDOWN_REASON_COMBAT"]
+                        -- FOR-04: Blizzard's chat lockdown (encounter, M+, PvP match,
+                        -- or forced) can be on with no combat; say so instead of "combat".
+                        -- Keystone / arena / rated BG below still take precedence.
+                        if not InCombatLockdown() and C_ChatInfo and C_ChatInfo.InChatMessagingLockdown
+                            and C_ChatInfo.InChatMessagingLockdown() then
+                            reason = L["LOCKDOWN_REASON_CHAT"]
+                        end
                         if C_ChallengeMode and C_ChallengeMode.IsChallengeModeActive and C_ChallengeMode.IsChallengeModeActive() then
                             reason = L["LOCKDOWN_REASON_KEYSTONE"]
                         else

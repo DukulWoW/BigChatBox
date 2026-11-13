@@ -170,6 +170,17 @@ BCB.RegisterEvent("PLAYER_REGEN_ENABLED", function()
     end
 end)
 
+-- FOR-04: a chat lockdown can start and end with no combat, so the flag was
+-- never reset and the next lockdown went unannounced. Retail / Forever only;
+-- SafeRegisterEvent skips it where the event does not exist.
+if not BCB.IsClassic then
+    BCB.RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED", function()
+        if not BCB.IsSecureContentActive() then
+            BCB._lockdownNotified = false
+        end
+    end)
+end
+
 -- Zone transitions (arena enter/leave, BG enter/leave)
 BCB.RegisterEvent("PLAYER_ENTERING_WORLD", function()
     C_Timer.After(1, function()

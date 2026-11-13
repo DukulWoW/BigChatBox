@@ -130,7 +130,12 @@ function BCB.SetupEditBoxHandlers()
         BigChatBoxDB.lastChatType = chatType
 
         if text and text ~= "" then
-            BCB.SendMessage(text, self)
+            -- FOR-03: the text went to Blizzard's box, which now has focus;
+            -- BCB's box is already cleared and hidden, so do not touch focus.
+            if BCB.SendMessage(text, self) == "handoff" then
+                historyIndex = 0
+                return
+            end
         end
 
         historyIndex = 0

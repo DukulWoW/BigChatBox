@@ -213,11 +213,94 @@ function BCB.SendMultilineItems(items, total, direct, onDone)
 end
 
 --------------------------------------------------------------------------------
+-- PROTECTED COMMANDS GO TO BLIZZARD'S BOX (FOR-03, FOR-05)
+-- BCB sends through ChatEdit_SendText from its own OnEnterPressed, so every
+-- slash handler runs tainted (BCB's code). Commands that reach a protected call
+-- then fail with ADDON_ACTION_BLOCKED / FORBIDDEN:
+--   /join, /leave            -> JoinPermanentChannel / LeaveChannelByName
+--                               (Retail and Forever; not protected on Classic)
+--   /run /script /dump /tinspect, while scripts are not yet allowed
+--                            -> the "allow dangerous scripts" popup opens
+--                               tainted and its Accept button is forbidden
+--   secure commands (/cast /target /focus ...), on every client
+-- No addon code can run these untainted, so BCB moves the text into Blizzard's
+-- own box (the Ctrl+Enter route) and the player presses Enter there, which runs
+-- it from a clean hardware event.
+-- The command lists come from Blizzard's localized SLASH_<NAME><n> globals.
+--------------------------------------------------------------------------------
+local function InSlashList(cmd, prefix)
+    for i = 1, 20 do
+        local s = _G[prefix .. i]
+        if type(s) == "string" and s:upper() == cmd then return true end
+    end
+    return false
+end
+
+local function NeedsBlizzardBox(text)
+    local cmd = text:match("^(/[^%s]+)")
+    if not cmd then return false end
+    cmd = cmd:upper()
+    if IsSecureCmd then
+        local ok, secure = pcall(IsSecureCmd, cmd)
+        if ok and secure then return true end
+    end
+    if not BCB.IsClassic and (InSlashList(cmd, "SLASH_JOIN") or InSlashList(cmd, "SLASH_LEAVE")) then
+        return true
+    end
+    if AreDangerousScriptsAllowed and not AreDangerousScriptsAllowed() then
+        if InSlashList(cmd, "SLASH_SCRIPT") or InSlashList(cmd, "SLASH_DUMP")
+            or InSlashList(cmd, "SLASH_TABLEINSPECT") then
+            return true
+        end
+    end
+    return false
+end
+BCB.NeedsBlizzardBox = NeedsBlizzardBox
+
+-- Moves text into Blizzard's chat box and focuses it. Same steps and order as
+-- BCB_UseBlizzardChat (below), minus the chat type sync: a command needs none.
+-- Returns true when handed over. Never during lockdown (Core/Security.lua).
+local function HandToBlizzardChat(text)
+    local box = ChatFrame1EditBox
+    if not box or BCB.IsSecureContentActive() then return false end
+    BCB._useBlizzardChat = true
+    BCB._suppressEditBoxHook = true
+    if BCB.frame and BCB.frame:IsShown() and BCB.editBox then
+        BCB.editBox:SetText(""); BCB.editBox:ClearFocus()
+        BCB.frame:Hide()
+    end
+    box:Show(); box:SetFocus()
+    box:SetText(text)
+    box:SetCursorPosition(#text)
+    C_Timer.After(0.1, function()
+        BCB._useBlizzardChat = false
+        BCB._suppressEditBoxHook = false
+    end)
+    return true
+end
+
+--------------------------------------------------------------------------------
 -- SEND MESSAGE
 -- Called from OnEnterPressed. Handles snippet expansion, RAID→INSTANCE fallback,
 -- and the dual-mode dispatch.
+-- Returns "handoff" when the text went to Blizzard's box instead (FOR-03).
 --------------------------------------------------------------------------------
 function BCB.SendMessage(text, editBox)
+    -- Slash commands: channel switches (/s, /w name, /1) were already taken off
+    -- the text by ParseChatCommand, so a leading "/" here is a real command.
+    if text:sub(1, 1) == "/" then
+        -- Lockdown (box was open when it began): SendDirect would post the
+        -- command as plain chat text, and Blizzard's box must not be touched.
+        if not BCB.IsSafeToTouchBlizzard() then
+            BCB:Print(L["LOCKDOWN_SLASH_BLOCKED"])
+            return
+        end
+        if NeedsBlizzardBox(text) and HandToBlizzardChat(text) then
+            BCB:Print(L["HANDOFF_PRESS_ENTER"])
+            return "handoff"
+        end
+    end
+
     local chatType    = editBox:GetAttribute("chatType") or "SAY"
     local sendTarget  = editBox:GetAttribute("tellTarget") or ""
     local sendChannel = editBox:GetAttribute("channelTarget")
