@@ -178,4 +178,4 @@ BigChatBox pauses during combat and during timed competitive instances (M+, aren
 
 The source code is licensed under the [GNU General Public License v3](LICENSE): you may fork and share it, as long as your version is GPLv3 too.
 
-The BigChatBox logo and icon are **All Rights Reserved** and may not be used in forks or other projects; other game art belongs to Blizzard Entertainment. See [LICENSE-ASSETS](LICENSE-ASSETS).
+The BigChatBox logo, icon and channel history button are **All Rights Reserved** and may not be used in forks or other projects; other game art belongs to Blizzard Entertainment. See [LICENSE-ASSETS](LICENSE-ASSETS).

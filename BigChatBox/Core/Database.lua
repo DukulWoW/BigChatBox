@@ -174,6 +174,15 @@ function BCB.InitializeDB()
     if db.multilineEnabled          == nil then db.multilineEnabled          = true  end
     if db.multilineUseDefaultStyle  == nil then db.multilineUseDefaultStyle  = true  end
 
+    -- Channel history panel (ALL-10): off until switched on in the Features tab.
+    -- Shown = the box button's state; All = "Show all" instead of this channel.
+    if db.channelHistoryEnabled    == nil then db.channelHistoryEnabled    = false   end
+    if db.channelHistoryShown      == nil then db.channelHistoryShown      = true    end
+    if db.channelHistoryAll        == nil then db.channelHistoryAll        = false   end
+    if db.channelHistorySide       == nil then db.channelHistorySide       = "above" end
+    if db.channelHistoryLines      == nil then db.channelHistoryLines      = 8       end
+    if db.channelHistoryTimestamps == nil then db.channelHistoryTimestamps = true    end
+
     MigrateDB(db)
 end
 

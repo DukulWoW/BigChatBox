@@ -185,6 +185,11 @@ function BCB.SetupEditBoxHandlers()
         C_Timer.After(0.15, function()
             if BCB._suppressEditBoxHook then return end
             if (GetTime() - (BCB._lastLinkInsertTime or 0)) < 0.3 then return end
+            -- A click in the channel history panel (links, scroll bar) keeps the box open (ALL-10)
+            local hp = BCB.channelHistoryPanel
+            if hp and BCB.frame:IsShown() and hp:IsVisible() and hp:IsMouseOver() then
+                self:SetFocus(); return
+            end
             if BCB.frame:IsShown() and not self:HasFocus() then
                 historyIndex = 0
                 self:SetText(""); self:SetCursorPosition(0)

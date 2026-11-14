@@ -542,6 +542,22 @@ L["EMOJI_TAB_LAST"]         = "Recentes"
 L["EMOJI_TAB_ASCII"]        = "Emoticons"
 L["EMOJI_LAST_EMPTY"]       = "Nenhuma selecao recente."
 
+-- -- Channel history panel (ALL-10) ---------------------------------------------
+L["SECTION_CHANNEL_HISTORY"]          = "Histórico do canal"
+L["CB_ENABLE_CHANNEL_HISTORY"]        = "Mostrar o histórico do canal na caixa de entrada"
+L["CB_ENABLE_CHANNEL_HISTORY_HELP"]   = "Um painel rolável com as mensagens recentes do canal em que você está escrevendo, ou de todo o bate-papo. O botão na caixa de entrada mostra ou oculta o painel. As mensagens são mantidas durante a sessão, até 200 por canal."
+L["CB_CHANNEL_HISTORY_TIMESTAMPS"]    = "Mostrar o horário de cada mensagem quando os carimbos de hora do bate-papo estão desligados"
+L["LABEL_CHANNEL_HISTORY_SIDE"]       = "Posição"
+L["CHANNEL_HISTORY_ABOVE"]            = "Acima da caixa de entrada"
+L["CHANNEL_HISTORY_BELOW"]            = "Abaixo da caixa de entrada"
+L["LABEL_CHANNEL_HISTORY_LINES"]      = "Altura (linhas)"
+L["CHANNEL_HISTORY_TITLE"]            = "Histórico do canal"
+L["CHANNEL_HISTORY_TOOLTIP"]          = "Clique para mostrar ou ocultar as mensagens recentes"
+L["CHANNEL_HISTORY_BTN_ALL"]          = "Mostrar tudo"
+L["CHANNEL_HISTORY_BTN_CHANNEL"]      = "Este canal"
+L["CHANNEL_HISTORY_HEADER_ALL"]       = "Todo o bate-papo"
+L["CHANNEL_HISTORY_EMPTY"]            = "Ainda não há mensagens aqui."
+
 -- ── v5.7.1 Snippets & History ───────────────────────────────────────────────────────────
 L["HISTORY_SEARCH_HINT"]        = "Pesquisar no histórico..."
 

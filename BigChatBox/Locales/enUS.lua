@@ -564,6 +564,22 @@ L["EMOJI_TAB_LAST"]         = "Last Used"
 L["EMOJI_TAB_ASCII"]        = "Emoticons"
 L["EMOJI_LAST_EMPTY"]       = "No recent selections yet."
 
+-- -- Channel history panel (ALL-10) ---------------------------------------------
+L["SECTION_CHANNEL_HISTORY"]          = "Channel History"
+L["CB_ENABLE_CHANNEL_HISTORY"]        = "Show channel history on the box"
+L["CB_ENABLE_CHANNEL_HISTORY_HELP"]   = "A scrollable panel with the recent messages of the channel you are typing in, or of all chat. The button on the box shows or hides it. Messages are kept for the session, up to 200 per channel."
+L["CB_CHANNEL_HISTORY_TIMESTAMPS"]    = "Show the time of each message when chat timestamps are off"
+L["LABEL_CHANNEL_HISTORY_SIDE"]       = "Position"
+L["CHANNEL_HISTORY_ABOVE"]            = "Above the box"
+L["CHANNEL_HISTORY_BELOW"]            = "Below the box"
+L["LABEL_CHANNEL_HISTORY_LINES"]      = "Height (lines)"
+L["CHANNEL_HISTORY_TITLE"]            = "Channel History"
+L["CHANNEL_HISTORY_TOOLTIP"]          = "Click to show or hide recent messages"
+L["CHANNEL_HISTORY_BTN_ALL"]          = "Show all"
+L["CHANNEL_HISTORY_BTN_CHANNEL"]      = "This channel"
+L["CHANNEL_HISTORY_HEADER_ALL"]       = "All chat"
+L["CHANNEL_HISTORY_EMPTY"]            = "No messages here yet."
+
 -- ── v5.7.1 Snippets & History ───────────────────────────────────────────────────────────
 L["HISTORY_SEARCH_HINT"]        = "Search history..."
 

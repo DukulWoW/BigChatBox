@@ -556,6 +556,22 @@ L["EMOJI_TAB_LAST"]         = "最近使用"
 L["EMOJI_TAB_ASCII"]        = "顏文字"
 L["EMOJI_LAST_EMPTY"]       = "尚無最近選擇記錄。"
 
+-- -- Channel history panel (ALL-10) ---------------------------------------------
+L["SECTION_CHANNEL_HISTORY"]          = "頻道記錄"
+L["CB_ENABLE_CHANNEL_HISTORY"]        = "在輸入框上顯示頻道記錄"
+L["CB_ENABLE_CHANNEL_HISTORY_HELP"]   = "一個可捲動的面板，顯示你正在輸入的頻道或全部聊天的最近訊息。輸入框上的按鈕可顯示或隱藏它。訊息在本次登入期間保留，每個頻道最多 200 則。"
+L["CB_CHANNEL_HISTORY_TIMESTAMPS"]    = "聊天時間戳記關閉時顯示每則訊息的時間"
+L["LABEL_CHANNEL_HISTORY_SIDE"]       = "位置"
+L["CHANNEL_HISTORY_ABOVE"]            = "輸入框上方"
+L["CHANNEL_HISTORY_BELOW"]            = "輸入框下方"
+L["LABEL_CHANNEL_HISTORY_LINES"]      = "高度（行數）"
+L["CHANNEL_HISTORY_TITLE"]            = "頻道記錄"
+L["CHANNEL_HISTORY_TOOLTIP"]          = "點擊以顯示或隱藏最近的訊息"
+L["CHANNEL_HISTORY_BTN_ALL"]          = "顯示全部"
+L["CHANNEL_HISTORY_BTN_CHANNEL"]      = "此頻道"
+L["CHANNEL_HISTORY_HEADER_ALL"]       = "全部聊天"
+L["CHANNEL_HISTORY_EMPTY"]            = "這裡還沒有訊息。"
+
 -- ── v5.7.1 Snippets & History ───────────────────────────────────────────────────────────
 L["HISTORY_SEARCH_HINT"]        = "搜尋歷史記錄..."
 

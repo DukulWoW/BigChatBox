@@ -48,6 +48,10 @@ function BCB.Initialize()
     if BCB.SetupEmojiIcon then
         SafeCall("EmojiPicker", BCB.SetupEmojiIcon)
     end
+    -- After the emoticon icon: its UpdateAnchors places the history button (ALL-10)
+    if BCB.SetupChannelHistory then
+        SafeCall("ChannelHistory", BCB.SetupChannelHistory)
+    end
 
     -- 4. Hooks (must come after frame creation — critical for chat interception)
     BCB.HookDefaultEditBox()

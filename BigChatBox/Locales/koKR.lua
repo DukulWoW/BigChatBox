@@ -556,6 +556,22 @@ L["EMOJI_TAB_LAST"]         = "최근 사용"
 L["EMOJI_TAB_ASCII"]        = "이모티콘"
 L["EMOJI_LAST_EMPTY"]       = "최근 선택 항목이 없습니다."
 
+-- -- Channel history panel (ALL-10) ---------------------------------------------
+L["SECTION_CHANNEL_HISTORY"]          = "채널 기록"
+L["CB_ENABLE_CHANNEL_HISTORY"]        = "입력창에 채널 기록 표시"
+L["CB_ENABLE_CHANNEL_HISTORY_HELP"]   = "입력 중인 채널 또는 전체 대화의 최근 메시지를 스크롤 가능한 패널에 표시합니다. 입력창의 버튼으로 표시하거나 숨깁니다. 메시지는 세션 동안 채널당 최대 200개까지 보관됩니다."
+L["CB_CHANNEL_HISTORY_TIMESTAMPS"]    = "대화 시간 표시가 꺼져 있을 때 각 메시지의 시간 표시"
+L["LABEL_CHANNEL_HISTORY_SIDE"]       = "위치"
+L["CHANNEL_HISTORY_ABOVE"]            = "입력창 위"
+L["CHANNEL_HISTORY_BELOW"]            = "입력창 아래"
+L["LABEL_CHANNEL_HISTORY_LINES"]      = "높이 (줄 수)"
+L["CHANNEL_HISTORY_TITLE"]            = "채널 기록"
+L["CHANNEL_HISTORY_TOOLTIP"]          = "클릭하여 최근 메시지 표시/숨기기"
+L["CHANNEL_HISTORY_BTN_ALL"]          = "모두 보기"
+L["CHANNEL_HISTORY_BTN_CHANNEL"]      = "이 채널"
+L["CHANNEL_HISTORY_HEADER_ALL"]       = "전체 대화"
+L["CHANNEL_HISTORY_EMPTY"]            = "아직 메시지가 없습니다."
+
 -- ── v5.7.1 Snippets & History ───────────────────────────────────────────────────────────
 L["HISTORY_SEARCH_HINT"]        = "기록 검색..."
 

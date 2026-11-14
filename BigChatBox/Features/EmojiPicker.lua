@@ -323,21 +323,32 @@ local EB_RIGHT_ICON    = -(ICON_SZ + ICON_PAD + 6)
 local EB_RIGHT_NO_ICON = -15
 local CC_RIGHT_ICON    = -(ICON_SZ + ICON_PAD + 8)
 local CC_RIGHT_NO_ICON = -8
+local ICON_GAP = 4
 
+-- The icon row at the right edge: the emoticon button, and left of it (or in its
+-- place) the channel history button (ALL-10, Features/ChannelHistory.lua).
 local function UpdateAnchors()
     local show = BigChatBoxDB and BigChatBoxDB.showEmojiPicker ~= false
+    local histBtn = BCB.channelHistoryBtn
+    local hist = histBtn and histBtn:IsShown()
+    if hist then
+        histBtn:ClearAllPoints()
+        histBtn:SetPoint("RIGHT", BCB.frame, "RIGHT", -(ICON_PAD + (show and (ICON_SZ + ICON_GAP) or 0)), 0)
+    end
+    local icons = (show and 1 or 0) + (hist and 1 or 0)
+    local extra = icons > 1 and (ICON_SZ + ICON_GAP) or 0
     if BCB.editBox then
         BCB.editBox:ClearAllPoints()
         BCB.editBox:SetPoint("LEFT",  BCB.frame, "LEFT",  15, 0)
         BCB.editBox:SetPoint("RIGHT", BCB.frame, "RIGHT",
-            show and EB_RIGHT_ICON or EB_RIGHT_NO_ICON, 0)
+            icons > 0 and (EB_RIGHT_ICON - extra) or EB_RIGHT_NO_ICON, 0)
     end
     if BCB.charCounter and BigChatBoxDB then
         local pos = BigChatBoxDB.charCounterPos or "inside_right"
         if pos == "inside_right" then
             BCB.charCounter:ClearAllPoints()
             BCB.charCounter:SetPoint("RIGHT", BCB.frame, "RIGHT",
-                show and CC_RIGHT_ICON or CC_RIGHT_NO_ICON, 0)
+                icons > 0 and (CC_RIGHT_ICON - extra) or CC_RIGHT_NO_ICON, 0)
         end
     end
 end

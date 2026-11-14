@@ -556,6 +556,22 @@ L["EMOJI_TAB_LAST"]         = "Derniers utilisés"
 L["EMOJI_TAB_ASCII"]        = "Émoticônes"
 L["EMOJI_LAST_EMPTY"]       = "Aucune sélection récente."
 
+-- -- Channel history panel (ALL-10) ---------------------------------------------
+L["SECTION_CHANNEL_HISTORY"]          = "Historique du canal"
+L["CB_ENABLE_CHANNEL_HISTORY"]        = "Afficher l'historique du canal sur la zone de saisie"
+L["CB_ENABLE_CHANNEL_HISTORY_HELP"]   = "Un panneau défilant avec les messages récents du canal dans lequel vous écrivez, ou de toute la discussion. Le bouton sur la zone de saisie l'affiche ou le masque. Les messages sont conservés pour la session, jusqu'à 200 par canal."
+L["CB_CHANNEL_HISTORY_TIMESTAMPS"]    = "Afficher l'heure de chaque message quand l'horodatage de la discussion est désactivé"
+L["LABEL_CHANNEL_HISTORY_SIDE"]       = "Position"
+L["CHANNEL_HISTORY_ABOVE"]            = "Au-dessus de la zone de saisie"
+L["CHANNEL_HISTORY_BELOW"]            = "Sous la zone de saisie"
+L["LABEL_CHANNEL_HISTORY_LINES"]      = "Hauteur (lignes)"
+L["CHANNEL_HISTORY_TITLE"]            = "Historique du canal"
+L["CHANNEL_HISTORY_TOOLTIP"]          = "Cliquez pour afficher ou masquer les messages récents"
+L["CHANNEL_HISTORY_BTN_ALL"]          = "Tout afficher"
+L["CHANNEL_HISTORY_BTN_CHANNEL"]      = "Ce canal"
+L["CHANNEL_HISTORY_HEADER_ALL"]       = "Toute la discussion"
+L["CHANNEL_HISTORY_EMPTY"]            = "Aucun message ici pour l'instant."
+
 -- ── v5.7.1 Snippets & History ───────────────────────────────────────────────────────────
 L["HISTORY_SEARCH_HINT"]        = "Rechercher dans l'historique..."
 

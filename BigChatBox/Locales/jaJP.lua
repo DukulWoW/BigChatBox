@@ -556,6 +556,22 @@ L["EMOJI_TAB_LAST"]         = "最近使用"
 L["EMOJI_TAB_ASCII"]        = "顔文字"
 L["EMOJI_LAST_EMPTY"]       = "最近の選択はありません。"
 
+-- -- Channel history panel (ALL-10) ---------------------------------------------
+L["SECTION_CHANNEL_HISTORY"]          = "チャンネル履歴"
+L["CB_ENABLE_CHANNEL_HISTORY"]        = "入力ボックスにチャンネル履歴を表示する"
+L["CB_ENABLE_CHANNEL_HISTORY_HELP"]   = "入力中のチャンネル、またはすべてのチャットの最近のメッセージをスクロールできるパネルで表示します。入力ボックスのボタンで表示/非表示を切り替えます。メッセージはセッション中、チャンネルごとに最大200件保持されます。"
+L["CB_CHANNEL_HISTORY_TIMESTAMPS"]    = "チャットのタイムスタンプがオフのとき、各メッセージの時刻を表示する"
+L["LABEL_CHANNEL_HISTORY_SIDE"]       = "位置"
+L["CHANNEL_HISTORY_ABOVE"]            = "入力ボックスの上"
+L["CHANNEL_HISTORY_BELOW"]            = "入力ボックスの下"
+L["LABEL_CHANNEL_HISTORY_LINES"]      = "高さ（行数）"
+L["CHANNEL_HISTORY_TITLE"]            = "チャンネル履歴"
+L["CHANNEL_HISTORY_TOOLTIP"]          = "クリックで最近のメッセージを表示/非表示"
+L["CHANNEL_HISTORY_BTN_ALL"]          = "すべて表示"
+L["CHANNEL_HISTORY_BTN_CHANNEL"]      = "このチャンネル"
+L["CHANNEL_HISTORY_HEADER_ALL"]       = "すべてのチャット"
+L["CHANNEL_HISTORY_EMPTY"]            = "まだメッセージはありません。"
+
 -- ── v5.7.1 Snippets & History ───────────────────────────────────────────────────────────
 L["HISTORY_SEARCH_HINT"]        = "履歴を検索..."
 

@@ -542,6 +542,22 @@ L["EMOJI_TAB_LAST"]         = "Recenti"
 L["EMOJI_TAB_ASCII"]        = "Emoticon"
 L["EMOJI_LAST_EMPTY"]       = "Nessuna selezione recente."
 
+-- -- Channel history panel (ALL-10) ---------------------------------------------
+L["SECTION_CHANNEL_HISTORY"]          = "Cronologia del canale"
+L["CB_ENABLE_CHANNEL_HISTORY"]        = "Mostra la cronologia del canale sulla casella di input"
+L["CB_ENABLE_CHANNEL_HISTORY_HELP"]   = "Un pannello scorrevole con i messaggi recenti del canale in cui stai scrivendo, o di tutta la chat. Il pulsante sulla casella di input lo mostra o lo nasconde. I messaggi vengono conservati per la sessione, fino a 200 per canale."
+L["CB_CHANNEL_HISTORY_TIMESTAMPS"]    = "Mostra l'ora di ogni messaggio quando gli orari della chat sono disattivati"
+L["LABEL_CHANNEL_HISTORY_SIDE"]       = "Posizione"
+L["CHANNEL_HISTORY_ABOVE"]            = "Sopra la casella di input"
+L["CHANNEL_HISTORY_BELOW"]            = "Sotto la casella di input"
+L["LABEL_CHANNEL_HISTORY_LINES"]      = "Altezza (righe)"
+L["CHANNEL_HISTORY_TITLE"]            = "Cronologia del canale"
+L["CHANNEL_HISTORY_TOOLTIP"]          = "Clicca per mostrare o nascondere i messaggi recenti"
+L["CHANNEL_HISTORY_BTN_ALL"]          = "Mostra tutto"
+L["CHANNEL_HISTORY_BTN_CHANNEL"]      = "Questo canale"
+L["CHANNEL_HISTORY_HEADER_ALL"]       = "Tutta la chat"
+L["CHANNEL_HISTORY_EMPTY"]            = "Ancora nessun messaggio qui."
+
 -- ── v5.7.1 Snippets & History ───────────────────────────────────────────────────────────
 L["HISTORY_SEARCH_HINT"]        = "Cerca nella cronologia..."
 

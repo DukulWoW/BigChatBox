@@ -555,6 +555,22 @@ L["EMOJI_TAB_LAST"]         = "Zuletzt verwendet"
 L["EMOJI_TAB_ASCII"]        = "Emoticons"
 L["EMOJI_LAST_EMPTY"]       = "Noch keine kürzlichen Auswahlen."
 
+-- -- Channel history panel (ALL-10) ---------------------------------------------
+L["SECTION_CHANNEL_HISTORY"]          = "Kanalverlauf"
+L["CB_ENABLE_CHANNEL_HISTORY"]        = "Kanalverlauf am Eingabefeld anzeigen"
+L["CB_ENABLE_CHANNEL_HISTORY_HELP"]   = "Ein scrollbares Feld mit den letzten Nachrichten des Kanals, in dem du schreibst, oder des gesamten Chats. Die Schaltfläche am Eingabefeld blendet es ein oder aus. Nachrichten werden für die Sitzung behalten, bis zu 200 pro Kanal."
+L["CB_CHANNEL_HISTORY_TIMESTAMPS"]    = "Uhrzeit jeder Nachricht anzeigen, wenn die Chat-Zeitstempel aus sind"
+L["LABEL_CHANNEL_HISTORY_SIDE"]       = "Position"
+L["CHANNEL_HISTORY_ABOVE"]            = "Über dem Eingabefeld"
+L["CHANNEL_HISTORY_BELOW"]            = "Unter dem Eingabefeld"
+L["LABEL_CHANNEL_HISTORY_LINES"]      = "Höhe (Zeilen)"
+L["CHANNEL_HISTORY_TITLE"]            = "Kanalverlauf"
+L["CHANNEL_HISTORY_TOOLTIP"]          = "Klicken, um die letzten Nachrichten ein- oder auszublenden"
+L["CHANNEL_HISTORY_BTN_ALL"]          = "Alle zeigen"
+L["CHANNEL_HISTORY_BTN_CHANNEL"]      = "Dieser Kanal"
+L["CHANNEL_HISTORY_HEADER_ALL"]       = "Gesamter Chat"
+L["CHANNEL_HISTORY_EMPTY"]            = "Hier gibt es noch keine Nachrichten."
+
 -- ── v5.7.1 Snippets & History ───────────────────────────────────────────────────────────
 L["HISTORY_SEARCH_HINT"]        = "Verlauf durchsuchen..."
 

@@ -75,6 +75,7 @@ Features\Snippets.lua
 Features\LinkHover.lua
 Features\AnchorEditor.lua
 Features\EmojiPicker.lua
+Features\ChannelHistory.lua
 Features\MultilineBox.lua
 
 # Minimap

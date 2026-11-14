@@ -82,6 +82,41 @@ function Config.BuildFeaturesTab(container)
     end)
     y = y - 40
 
+    -- Channel History (ALL-10)
+    local function ApplyCH() if BCB.ApplyChannelHistorySettings then BCB.ApplyChannelHistorySettings() end end
+    local chH = ct:CreateFontString(nil, "ARTWORK", "GameFontHighlightMedium"); chH:SetPoint("TOPLEFT", PAD, y); chH:SetText(L["SECTION_CHANNEL_HISTORY"] or "Channel History"); y = y - 22
+    local chEn = CreateFrame("CheckButton", nil, ct, "UICheckButtonTemplate"); chEn:SetPoint("TOPLEFT", PAD + 10, y)
+    chEn.text = chEn:CreateFontString(nil, "ARTWORK", "GameFontHighlight"); chEn.text:SetPoint("LEFT", chEn, "RIGHT", 2, 0); chEn.text:SetText(L["CB_ENABLE_CHANNEL_HISTORY"] or "Show channel history on the box")
+    chEn:SetChecked(BigChatBoxDB.channelHistoryEnabled == true)
+    chEn:SetScript("OnClick", function(self)
+        BigChatBoxDB.channelHistoryEnabled = self:GetChecked() and true or false
+        -- Switching it on shows the panel, even if the box button hid it before
+        if BigChatBoxDB.channelHistoryEnabled then BigChatBoxDB.channelHistoryShown = true end
+        ApplyCH()
+    end)
+    y = y - 28
+    local chHelp = ct:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+    chHelp:SetPoint("TOPLEFT", PAD + 30, y); chHelp:SetWidth(Config.WINDOW_WIDTH - 100)
+    chHelp:SetJustifyH("LEFT"); chHelp:SetTextColor(0.5, 0.5, 0.5)
+    chHelp:SetText(L["CB_ENABLE_CHANNEL_HISTORY_HELP"] or "")
+    y = y - chHelp:GetStringHeight() - 10
+    local chTs = CreateFrame("CheckButton", nil, ct, "UICheckButtonTemplate"); chTs:SetPoint("TOPLEFT", PAD + 10, y)
+    chTs.text = chTs:CreateFontString(nil, "ARTWORK", "GameFontHighlight"); chTs.text:SetPoint("LEFT", chTs, "RIGHT", 2, 0); chTs.text:SetText(L["CB_CHANNEL_HISTORY_TIMESTAMPS"] or "Show the time of each message when chat timestamps are off")
+    chTs:SetChecked(BigChatBoxDB.channelHistoryTimestamps ~= false)
+    chTs:SetScript("OnClick", function(self) BigChatBoxDB.channelHistoryTimestamps = self:GetChecked() and true or false; ApplyCH() end)
+    y = y - 34
+    local sideAbove = L["CHANNEL_HISTORY_ABOVE"] or "Above the box"
+    local sideBelow = L["CHANNEL_HISTORY_BELOW"] or "Below the box"
+    local chSide = Config.CreateWowDropdown(ct, L["LABEL_CHANNEL_HISTORY_SIDE"] or "Position",
+        function() return { sideAbove, sideBelow } end,
+        BigChatBoxDB.channelHistorySide == "below" and sideBelow or sideAbove,
+        function(n) BigChatBoxDB.channelHistorySide = (n == sideBelow) and "below" or "above"; ApplyCH() end)
+    chSide:SetPoint("TOPLEFT", 0, y); chSide:SetPoint("RIGHT"); y = y - 52
+    local chLines = Config.CreateSlider(ct, L["LABEL_CHANNEL_HISTORY_LINES"] or "Height (lines)", 3, 30,
+        BigChatBoxDB.channelHistoryLines or 8, 8,
+        function(v) BigChatBoxDB.channelHistoryLines = v; ApplyCH() end)
+    chLines:SetPoint("TOPLEFT", 0, y); chLines:SetPoint("RIGHT"); y = y - 46
+
     -- Only where the multiline box exists (not on Classic yet). Detects the feature,
     -- not the client, so it shows up wherever MultilineBox.lua is loaded (CMPT-04).
     if BCB.SendMultilineMessage then
