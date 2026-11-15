@@ -1,17 +1,9 @@
-# BigChatBox v7.0.1 - I intend to live forever
+# BigChatBox v7.1.0 - I intend to live forever
 
 ## All versions
 
-### Change
-- Protected commands such as /cast, /target and /focus now move to Blizzard's chat box instead of failing: press Enter again to run them.
+### New
+- Channel history on the box. Switch it on in Features: a panel above (or below) the box shows the recent messages of the channel you are typing in, with times, clickable links and a scroll bar, or all chat with one click. BigChatBox keeps up to 200 messages per channel for the session, more than the chat tabs hold. Choose whether it opens with the box or waits for its button.
 
 ### Fixed
-- /join and /leave typed in BigChatBox no longer give an "action blocked" error on Retail and WoW Forever: they move to Blizzard's chat box, press Enter again to run them.
-- Accepting the "allow scripts" popup after a /run, /script or /dump from BigChatBox no longer fails: until scripts are allowed, these commands move to Blizzard's chat box.
-- A chat lockdown without combat now says "Paused during a chat lockdown" instead of "combat", and is announced again the next time it starts.
-- A command typed while a lockdown began is no longer posted to chat as plain text.
-
-## Classic only
-
-### Fixed
-- The language choice in the setup wizard and Settings > Advanced is now shown on Classic too.
+- Clicking a channel name in chat (Trade, Guild, Party, ...) opens the box on that channel again, instead of the one you last posted in. Works with Chattynator too.
