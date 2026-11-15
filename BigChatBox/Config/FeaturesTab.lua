@@ -100,7 +100,17 @@ function Config.BuildFeaturesTab(container)
     chHelp:SetJustifyH("LEFT"); chHelp:SetTextColor(0.5, 0.5, 0.5)
     chHelp:SetText(L["CB_ENABLE_CHANNEL_HISTORY_HELP"] or "")
     y = y - chHelp:GetStringHeight() - 10
-    local chTs = CreateFrame("CheckButton", nil, ct, "UICheckButtonTemplate"); chTs:SetPoint("TOPLEFT", PAD + 10, y)
+    -- Whether each box open starts with the panel open; the box button toggles it per open
+    local chSo = CreateFrame("CheckButton", nil, ct, "UICheckButtonTemplate"); chSo:SetPoint("TOPLEFT", PAD + 10, y)
+    chSo.text = chSo:CreateFontString(nil, "ARTWORK", "GameFontHighlight"); chSo.text:SetPoint("LEFT", chSo, "RIGHT", 2, 0); chSo.text:SetText(L["CB_CHANNEL_HISTORY_START_OPEN"] or "Open the panel each time the box opens")
+    chSo:SetChecked(BigChatBoxDB.channelHistoryStartOpen ~= false)
+    chSo:SetScript("OnClick", function(self)
+        BigChatBoxDB.channelHistoryStartOpen = self:GetChecked() and true or false
+        BigChatBoxDB.channelHistoryShown = BigChatBoxDB.channelHistoryStartOpen  -- show the effect now
+        ApplyCH()
+    end)
+    y = y - 28
+    local chTs =CreateFrame("CheckButton", nil, ct, "UICheckButtonTemplate"); chTs:SetPoint("TOPLEFT", PAD + 10, y)
     chTs.text = chTs:CreateFontString(nil, "ARTWORK", "GameFontHighlight"); chTs.text:SetPoint("LEFT", chTs, "RIGHT", 2, 0); chTs.text:SetText(L["CB_CHANNEL_HISTORY_TIMESTAMPS"] or "Show the time of each message when chat timestamps are off")
     chTs:SetChecked(BigChatBoxDB.channelHistoryTimestamps ~= false)
     chTs:SetScript("OnClick", function(self) BigChatBoxDB.channelHistoryTimestamps = self:GetChecked() and true or false; ApplyCH() end)

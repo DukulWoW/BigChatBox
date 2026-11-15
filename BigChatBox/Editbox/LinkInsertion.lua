@@ -158,16 +158,34 @@ hooksecurefunc("SetItemRef", function(link, text, button, chatFrame)
         return
     end
 
-    -- Channel link
+    -- Channel link (ALL-13). Blizzard's chat and Chattynator both build these as
+    -- |Hchannel:channel:2|h (a numbered channel) or |Hchannel:GUILD|h (guild, party, raid, ...),
+    -- so linkData is "channel:2" or "GUILD", never a bare number. Same rules as Blizzard's own
+    -- handler (ItemRefHandlersShared.lua): left click only, Shift+click opens the Channels window,
+    -- a channel we have left does nothing, pet battle logs do nothing.
     if linkType == "channel" then
-        local chanNum = tonumber(linkData)
-        if chanNum then
-            BCB.frame:Show(); BCB.editBox:SetFocus()
-            BCB.editBox:SetAttribute("chatType", "CHANNEL")
-            BCB.editBox:SetAttribute("channelTarget", chanNum)
-            BigChatBoxDB.lastChatType = "CHANNEL"
-            if BCB.UpdateChannelDisplay then BCB.UpdateChannelDisplay() end
+        if button ~= "LeftButton" or IsModifiedClick("CHATLINK") then return end
+        local chatType, chatTarget = strsplit(":", linkData)
+        chatType = chatType and strupper(chatType)
+        if not chatType or chatType:find("^PET_BATTLE") then return end
+        local chanNum
+        if chatType == "CHANNEL" then
+            chanNum = tonumber(chatTarget)
+            if not chanNum or GetChannelName(chanNum) == 0 then return end
+        elseif not (ChatTypeInfo and ChatTypeInfo[chatType]) then
+            return
         end
+        BCB.frame:Show(); BCB.editBox:SetFocus()
+        BCB.editBox:SetAttribute("chatType", chatType)
+        if chanNum then BCB.editBox:SetAttribute("channelTarget", chanNum) end
+        -- Blizzard's handler opens chat with "/2" or "/GUILD"; where an OpenChat hook copied that
+        -- into the box, drop it, since the channel is now set.
+        local slash = "/" .. strupper(chanNum and tostring(chanNum) or chatType)
+        if strupper(BCB.editBox:GetText() or "") == slash then
+            BCB.editBox:SetText(""); BCB.editBox:SetCursorPosition(0)
+        end
+        BigChatBoxDB.lastChatType = chatType
+        if BCB.UpdateChannelDisplay then BCB.UpdateChannelDisplay() end
         return
     end
 end)

@@ -178,6 +178,7 @@ function BCB.InitializeDB()
     -- Shown = the box button's state; All = "Show all" instead of this channel.
     if db.channelHistoryEnabled    == nil then db.channelHistoryEnabled    = false   end
     if db.channelHistoryShown      == nil then db.channelHistoryShown      = true    end
+    if db.channelHistoryStartOpen  == nil then db.channelHistoryStartOpen  = true    end
     if db.channelHistoryAll        == nil then db.channelHistoryAll        = false   end
     if db.channelHistorySide       == nil then db.channelHistorySide       = "above" end
     if db.channelHistoryLines      == nil then db.channelHistoryLines      = 8       end

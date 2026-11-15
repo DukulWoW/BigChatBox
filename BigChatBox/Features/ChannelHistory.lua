@@ -494,6 +494,15 @@ function BCB.SetupChannelHistory()
     if not Available() then return end
     CreateToggleButton()
     BCB.frame:HookScript("OnShow", function()
+        if not (Enabled() and Available()) then return end
+        -- Each box open starts the panel the way Features says (Dukul, 2026-11-15); the
+        -- button on the box toggles it for this open only.
+        local startOpen = BigChatBoxDB.channelHistoryStartOpen ~= false
+        if (BigChatBoxDB.channelHistoryShown ~= false) ~= startOpen then
+            BigChatBoxDB.channelHistoryShown = startOpen
+            BCB.ApplyChannelHistorySettings()  -- shows or hides, hooks and renders
+            return
+        end
         if not ShouldShow() then return end
         HookFrames()  -- picks up temporary whisper windows opened since
         RequestRender()
