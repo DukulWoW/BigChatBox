@@ -4,6 +4,12 @@
 -- Visual style mirrors the main BCB frame exactly. Channel label floats above the frame like the main editbox.
 
 local BCB = BigChatBox
+
+-- Retail and WoW Forever only, for now (ALL-05 ports it). The one TOC loads this file on
+-- every client (ALL-15), so Classic stops here: BCB.SendMultilineMessage stays nil, which
+-- FeaturesTab detects, and ClassicCompat.lua's BCB_OpenMultiline stub stays in place.
+if BCB.IsClassic then return end
+
 local L   = BCB.L or {}
 
 local CHAT_MSG_LIMIT = 255

@@ -1,4 +1,4 @@
-## Interface: 120105, 120100
+## Interface: 120105, 120100, 16001, 50504, 20506, 11509
 ## Title: |cff5599ffB|cff5fa0ffi|cff69a7ffg|cff73aeffC|cff7db5ffh|cff87bcffa|cff91c3fft|cff9bcaffB|cffa5d1ffo|cffafd8ffx|r
 ## IconTexture: Interface/Addons/BigChatBox/assets/icon
 ## Notes: A large, customizable chat input box with full appearance control
@@ -25,8 +25,16 @@
 ## Category-zhCN: 聊天
 ## Category-zhTW: 對話
 
+# One TOC for every client (ALL-15, 2026-11-16): Retail, WoW Forever, Mists Classic,
+# TBC Anniversary and Classic Era all load this file. Client-only files gate themselves
+# at load: ClassicCompat.lua returns at once unless the client is Classic, and
+# MultilineBox.lua returns at once on Classic. Forever is the Retail client, not Classic.
+
 # Bootstrap
 Init.lua
+
+# Classic compatibility shim (must load right after Init.lua; does nothing off Classic)
+Compat\ClassicCompat.lua
 
 # Libraries
 libs\libs.xml
@@ -73,6 +81,7 @@ Features\AnchorEditor.lua
 Features\EmojiPicker.lua
 Features\ChannelHistory.lua
 Features\MultilineBox.lua
+Features\SkinSpike.lua
 
 # Minimap
 Minimap\Minimap.lua

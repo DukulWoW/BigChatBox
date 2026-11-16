@@ -54,7 +54,13 @@ function BCB.Initialize()
     end
 
     -- 4. Hooks (must come after frame creation — critical for chat interception)
-    BCB.HookDefaultEditBox()
+    -- ALL-11 spike (Features/SkinSpike.lua, off by default): when /bcbspike on is set,
+    -- BCB never hooks Blizzard's box and skins it instead. Remove with the spike.
+    if BCB.SkinSpikeActive and BCB.SkinSpikeActive() then
+        SafeCall("SkinSpike", BCB.StartSkinSpike)
+    else
+        BCB.HookDefaultEditBox()
+    end
 
     -- 5. Slash commands
     BCB.RegisterSlashCommands()

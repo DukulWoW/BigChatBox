@@ -1,9 +1,13 @@
 -- BigChatBox Compat/ClassicCompat.lua — Classic client compatibility shim
 --
--- Loaded FIRST (before any other BCB file except Init.lua) in all Classic TOC files.
--- Sets BCB.IsClassic = true and patches APIs that differ from Midnight retail.
+-- Loaded FIRST (before any other BCB file except Init.lua) by the one TOC every client
+-- shares (ALL-15, 2026-11-16; until then only the three Classic TOCs listed it).
+-- On Retail and WoW Forever it returns at once (the gate below), so BCB.IsClassic
+-- stays nil there. On Classic it sets BCB.IsClassic = true and patches APIs that
+-- differ from Midnight retail.
 --
--- Clients covered: TBC Anniversary (20505), Mists Classic (50503), Vanilla Era (11508)
+-- Clients covered: TBC Anniversary (205xx), Mists Classic (505xx), Classic Era (115xx)
+-- Never WoW Forever: it is the Retail client on a 16xxx interface (see Init.lua).
 --
 -- Patches applied here:
 --   1. C_UI.Reload()          — doesn't exist; forward to ReloadUI()
@@ -13,10 +17,19 @@
 --   5. Locale                 — LoadSavedVariablesFirst:1 ignored; use GetLocale()
 --   6. Config slider widget   — no patch: the modern template exists on Classic too
 --   7. Config dropdown widget — WowStyle1DropdownTemplate absent; custom build
---   8. AddonCompartment       — not registered (omitted from Classic TOC)
+--   8. AddonCompartment       — registered on every client by the one TOC (ALL-15);
+--                                ignored where the client has no compartment
 
 BigChatBox = BigChatBox or {}
 local BCB = BigChatBox
+
+-- ─── Client gate (ALL-15) ───────────────────────────────────────────────────
+-- Classic is interface < 100000 minus Forever's 16000-19999 (BCB.IsForever, Init.lua).
+-- Everything below this line runs on Classic only.
+do
+    local interface = select(4, GetBuildInfo()) or 0
+    if interface >= 100000 or BCB.IsForever then return end
+end
 
 -- ─── Identity flag ──────────────────────────────────────────────────────────
 BCB.IsClassic = true
@@ -123,7 +136,7 @@ if not WHITE_FONT_COLOR then
 end
 
 -- ─── 12. Multiline and retail-only binding stubs ────────────────────────────
--- MultilineBox.lua is not loaded on Classic. Stub the global so the keybinding
+-- MultilineBox.lua returns at its first line on Classic (ALL-15). Stub the global so the keybinding
 -- defined in Bindings.xml doesn't throw an error if triggered somehow.
 function BCB_OpenMultiline()
     -- Multiline box is not available in Classic — silently do nothing.
